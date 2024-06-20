@@ -1,0 +1,44 @@
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f9;
+}
+
+.custom-card {
+    width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.custom-card .p-card-header,
+.custom-card .p-card-subheader {
+    background-color: #007ad9;
+    color: white;
+    padding: 10px;
+}
+
+.custom-card .p-card-subheader {
+    background-color: #005ea6;
+}
+
+.contact-phone {
+    font-size: 1.2em;
+    color: #333;
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.button {
+    flex: 1;
+}

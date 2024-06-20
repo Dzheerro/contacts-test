@@ -1,1 +1,13 @@
+<div class="wrapper" *ngIf="contacts$ | async as contacts">
+    <p-card *ngFor="let contact of contacts" [header]="contact?.name" [subheader]="contact?.username" class="custom-card" [routerLink]="['/discover-contact/', contact?.id]">
+        <p class="contact-phone">
+            Phone number: {{contact?.phone}}
+        </p>
+        <ng-template pTemplate="footer">
+            <div class="button-group">
+                <p-button label="More" severity="secondary" class="button" styleClass="w-full" />
+            </div>
+        </ng-template>
+    </p-card>
+</div>
 
