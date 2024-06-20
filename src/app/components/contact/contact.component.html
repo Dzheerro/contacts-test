@@ -1,3 +1,7 @@
+<div class="card flex justify-content-center">
+    <p-toast></p-toast>
+</div>
+
 <div class="wrapper" *ngIf="contact$ | async as contact">
     <p-card [header]="contact.name" [subheader]="contact.email" class="custom-card">
         <div class="card-content">
@@ -14,6 +18,8 @@
         <ng-template pTemplate="footer">
             <div class="button-group">
                 <p-button label="More" severity="secondary" class="button" styleClass="w-full" />
+                <p-button label="Delete" severity="secondary" class="button" styleClass="w-full"
+                    (onClick)="deleteContact(contact.id)" />
             </div>
         </ng-template>
     </p-card>

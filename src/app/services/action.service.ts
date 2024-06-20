@@ -20,4 +20,8 @@ export class ActionService {
     return this.http.get<Contact[]>(`${this.apiEndpoint}/users/${id}`);
   }
 
+  deleteContact(id: number): Observable<Contact[]> {
+    return this.http.delete<Contact[]>(`${this.apiEndpoint}/users/${id}`);
+  }
+
 }
