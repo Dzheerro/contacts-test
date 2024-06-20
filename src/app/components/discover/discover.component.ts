@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-discover',
   standalone: true,
@@ -9,5 +10,7 @@ import { Component } from '@angular/core';
   styleUrl: './discover.component.scss'
 })
 export class DiscoverComponent {
-  constructor() {}
+  
+  constructor() { }
+
 }
