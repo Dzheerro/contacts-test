@@ -24,4 +24,16 @@ export class ActionService {
     return this.http.delete<Contact[]>(`${this.apiEndpoint}/users/${id}`);
   }
 
+  createNewContact(user: Contact): Observable<Contact[]> {
+    return this.http.post<Contact[]>(`${this.apiEndpoint}/users`, user);
+  }
+
+  updateContact(contact: Contact): Observable<Contact> {
+    return this.http.put<Contact>(`${this.apiEndpoint}/users/${contact.id}`, contact);
+  }
+
+  searchContacts(query: string): Observable<Contact[]> {
+    return this.http.get<Contact[]>(`${this.apiEndpoint}/users?name_like=${query}`);
+  }
+
 }
