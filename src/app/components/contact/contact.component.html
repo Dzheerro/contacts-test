@@ -18,7 +18,7 @@
         <ng-template pTemplate="footer">
             <div class="button-group">
                 <p-button label="Edit" severity="info" class="button" styleClass="w-full"
-                    [routerLink]="['edit-contact/', contact.id]"></p-button>
+                    [routerLink]="['/edit-contact', contact?.id]"></p-button>
                 <p-button label="Delete" severity="danger" class="button" styleClass="w-full"
                     (onClick)="deleteContact(contact.id)" />
             </div>
