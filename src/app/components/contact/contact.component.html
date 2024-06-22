@@ -9,7 +9,7 @@
             <p class="contact-detail">
                 <strong>Phone Number:</strong> {{contact?.phone}}<br>
                 <strong>Email:</strong> {{contact?.email}}<br>
-                <strong>City:</strong> {{contact?.city}}<br>
+                <strong>City:</strong> {{contact?.address.city}}<br>
                 <strong>Company:</strong> {{contact?.company.name}}<br>
                 <strong>Website:</strong> <a [href]="'http://' + contact?.website"
                     target="_blank">{{contact?.website}}</a>

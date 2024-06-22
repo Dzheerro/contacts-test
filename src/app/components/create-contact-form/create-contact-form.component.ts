@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActionService } from '../../services/action.service';
-import { Contact } from '../../models/contact';
-import { error } from 'console';
 
 @Component({
   selector: 'app-create-contact-form',

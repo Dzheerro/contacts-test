@@ -16,7 +16,7 @@ export class ActionService {
     return this.http.get<Contact[]>(`${this.apiEndpoint}/users`);
   }
 
-  getContactById(id: number) {
+  getContactById(id: number):Observable<Contact[]> {
     return this.http.get<Contact[]>(`${this.apiEndpoint}/users/${id}`);
   }
 
