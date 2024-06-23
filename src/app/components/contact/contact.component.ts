@@ -12,6 +12,7 @@ import { ButtonModule } from 'primeng/button'
 import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { Contact } from '../../models/contact';
 
 @Component({
   selector: 'app-contact',
@@ -24,12 +25,14 @@ import { MessageService } from 'primeng/api';
 
 export class ContactComponent implements OnInit {
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(
+    private activatedRoute: ActivatedRoute,
     private actionService: ActionService,
     private messageService: MessageService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
-  contact$!: Observable<any>;
+  contact$!: Observable<Contact | undefined>;
   contactId!: number;
   message: string = '';
 
@@ -39,18 +42,19 @@ export class ContactComponent implements OnInit {
         this.contactId = +params['id'];
         return this.actionService.getContactById(this.contactId);
       })
-    )
-  };
+    );
+  }
 
   deleteContact(id: number) {
     this.actionService.deleteContact(id).subscribe(
-      (response: any) => {
-        if (response && Object.keys(response).length === 0) {
-          this.message = 'Contact was deleted. You will be redirected to the home page in 5 seconds.';
+      (response: Contact[]) => {
+        const contactExists = response.some(contact => contact.id === id);
+        if (!contactExists) {
+          this.message = 'Contact was deleted from Local Storage. Local Storage will be updated when you are redirected to the Home Page.';
           this.messageService.add({ severity: 'success', summary: 'Success', detail: this.message });
           setTimeout(() => {
             this.router.navigate(['/discover-contact']);
-          }, 5000);
+          }, 6000);
         } else {
           this.message = 'Failed to delete contact.';
           this.messageService.add({ severity: 'error', summary: 'Error', detail: this.message });
@@ -63,8 +67,4 @@ export class ContactComponent implements OnInit {
       }
     );
   }
-
-  // In JSONPlaceholder Docs: "Important: resource will not be really updated on the server but it will be faked as if."
-  // When a DELETE request is executed, the data is not actually deleted, but the API returns a response as if the deletion was successful.
-
 }

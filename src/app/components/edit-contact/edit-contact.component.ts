@@ -8,6 +8,7 @@ import { MessagesModule } from 'primeng/messages';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { Contact } from '../../models/contact';
 
 
 @Component({
@@ -33,12 +34,6 @@ export class EditContactComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.contactId = +params['id'];
-      this.loadContact(this.contactId);
-      this.messageService.add({ severity: 'info', summary: 'Test Message', detail: 'This is a test message' });
-    });
-
     this.contactForm = this.fb.group({
       name: ['', Validators.required],
       phone: ['', Validators.required],
@@ -47,32 +42,41 @@ export class EditContactComponent implements OnInit {
         city: ['', Validators.required],
       }),
     });
+
+    this.route.params.subscribe(params => {
+      this.contactId = +params['id'];
+      this.loadContact(this.contactId);
+    });
   }
 
   loadContact(id: number) {
-    this.actionService.getContactById(id).subscribe(contact => {
-      this.contactForm.patchValue(contact);
-    });
+    this.actionService.getContactById(id).subscribe(
+      (contact: Contact | undefined) => {
+        if (contact) {
+          this.contactForm.patchValue({
+            name: contact.name,
+            phone: contact.phone,
+            email: contact.email,
+            address: {
+              city: contact.address?.city
+            }
+          });
+        }
+      }
+    );
   }
 
   onSubmit() {
     if (this.contactForm.valid) {
-      this.actionService.updateContact({ id: this.contactId, ...this.contactForm.value }).subscribe(
-        () => {
-          this.message = 'Contact updated successfully.';
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: this.message });
-          this.router.navigate(['/discover-contact']);
-        },
+      const updatedContact = { id: this.contactId, ...this.contactForm.value };
+      console.log('Updated Contact:', updatedContact);
+      this.actionService.updateContact(updatedContact).subscribe(() => {
+        this.router.navigate(['/discover-contact']);
+      },
         (error: any) => {
           console.error('Error updating contact:', error);
-          this.message = 'Failed to update contact.';
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: this.message });
         }
       );
-    } else {
-      this.message = 'Form is invalid. Please check the fields.';
-      this.messageService.add({ severity: 'warn', summary: 'Warning', detail: this.message });
     }
   }
-  
 }

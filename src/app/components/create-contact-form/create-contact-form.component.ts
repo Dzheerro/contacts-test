@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActionService } from '../../services/action.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-contact-form',
@@ -28,7 +29,7 @@ export class CreateContactFormComponent {
         lng: ['']
       })
     }),
-    phone: [''],
+    phone: ['', Validators.required, Validators.maxLength(10)],
     website: [''],
     company: this.formBuilder.group({
       name: [''],
@@ -37,12 +38,13 @@ export class CreateContactFormComponent {
     })
   });
 
-  constructor(private formBuilder: FormBuilder, private actionService: ActionService) { }
+  constructor(private formBuilder: FormBuilder, private actionService: ActionService, private router: Router) { }
 
   onSubmit() {
     if (this.form.valid) {
       this.contactInfo = this.form.value;
       this.actionService.createNewContact(this.contactInfo).subscribe( (response) => {
+        this.router.navigate(['/discover-contact']);
         console.log('Contact Created', response);
       },
         error => {
